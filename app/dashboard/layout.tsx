@@ -34,6 +34,7 @@ import { NavItem } from './nav-item';
 import logo from 'public/logo.webp';
 import ThemeSwitch from '@/components/ui/theme-switch';
 import Image from 'next/image';
+import { SearchInput } from './search';
 
 export default function DashboardLayout({
   children

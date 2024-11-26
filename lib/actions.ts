@@ -2,7 +2,7 @@
 
 import { signIn } from 'auth';
 import { AuthError } from 'next-auth';
-import { ProductForm, State } from './definitions';
+import { ProductForm, ProductQuery, State } from './definitions';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
@@ -29,6 +29,17 @@ const ProductFormSchema = z.object({
     invalid_type_error: 'selecione o status atual do produto'
   }),
   created_at: z.string()
+});
+
+const SaleFormSchema = z.object({
+  id: z.string(),
+  amount: z.string(),
+  user_id: z.string(),
+  product_id: z.string()
+});
+
+const CreateSale = SaleFormSchema.omit({
+  id: true
 });
 
 const CreateProduct = ProductFormSchema.omit({
@@ -86,6 +97,51 @@ export async function createProduct(prevState: State, formData: FormData) {
   try {
     await sql`insert into products (name, category_id, price, original_price, amount_in_stock, created_at, status)
               values(${name}, ${category_id}, ${price}, ${original_price}, ${amount_in_stock}, now(), 'active')`;
+  } catch (e) {
+    return {
+      message: 'Database Error: Failed to Create Invoice.'
+    };
+  }
+
+  revalidatePath('/dashboard');
+  redirect('/dashboard');
+}
+
+export async function createSale(prevState: State, formData: FormData) {
+  const validatedSaleFields = CreateSale.safeParse({
+    user_id: formData.get('user_id'),
+    product_id: formData.get('product_id'),
+    amount: formData.get('amount')
+  });
+
+  if (!validatedSaleFields.success) {
+    console.log('validatedSaleFields.error.flatten().fieldErrors');
+    console.log(validatedSaleFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedSaleFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.'
+    };
+  }
+
+  let user_id = formData.get('user_id');
+  let product_id = formData.get('product_id');
+  let amount = formData.get('amount');
+
+  const data = await sql<ProductQuery>`
+        SELECT
+        id,
+        name,
+        price
+        FROM products
+        where id = ${Number(product_id)}
+    `;
+
+  const product = data.rows[0];
+  const total_price = Number(amount) * Number(product.price);
+
+  try {
+    await sql`insert into sales (user_id, product_id, amount, total_price, created_at)
+                values(${Number(user_id)}, ${Number(product_id)}, ${Number(amount)}, ${total_price}, now())`;
   } catch (e) {
     return {
       message: 'Database Error: Failed to Create Invoice.'

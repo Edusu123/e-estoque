@@ -14,7 +14,7 @@ import {
 import { count, eq, ilike } from 'drizzle-orm';
 import { createInsertSchema } from 'drizzle-zod';
 import { sql } from '@vercel/postgres';
-import { ProductForm } from './definitions';
+import { ProductForm, SaleForm } from './definitions';
 
 export const db = drizzle(neon(process.env.POSTGRES_URL!));
 
@@ -94,4 +94,23 @@ export async function fetchProductById(id: string) {
   }));
 
   return product[0];
+}
+
+export async function getSales() {
+  const data = await sql<SaleForm>`
+    select 
+      s.id,
+      u.name as user_name,
+      p.name as product_name,
+      s.amount,
+      s.total_price,
+      s.created_at
+    from Sales s 
+    join products p on s.product_id = p.id
+    join users u on s.user_id = u.id
+  `;
+
+  const sales = data.rows;
+
+  return sales;
 }

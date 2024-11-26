@@ -2,8 +2,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductsTable } from './products-table';
-import { getProducts } from '@/lib/db';
+import { getProducts, getSales } from '@/lib/db';
 import Link from 'next/link';
+import { SalesTable } from './sales-table';
+// import { useState } from 'react';
 
 export default async function ProductsPage(props: {
   searchParams: Promise<{ q: string; offset: string }>;
@@ -16,6 +18,8 @@ export default async function ProductsPage(props: {
     search,
     Number(offset)
   );
+  const sales = await getSales();
+  // const [isProduct, setisProduct] = useState(true);
 
   return (
     <Tabs defaultValue="all">
@@ -29,17 +33,25 @@ export default async function ProductsPage(props: {
           </TabsTrigger> */}
         </TabsList>
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" variant="outline" className="h-8 gap-1">
+          {/* <Button size="sm" variant="outline" className="h-8 gap-1">
             <File className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Export
             </span>
-          </Button>
+          </Button> */}
           <Link href="/dashboard/products/create">
             <Button size="sm" className="h-8 gap-1">
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Add Product
+                Novo produto
+              </span>
+            </Button>
+          </Link>
+          <Link href="/dashboard/sales/create">
+            <Button size="sm" className="h-8 gap-1">
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Nova venda
               </span>
             </Button>
           </Link>
@@ -53,11 +65,11 @@ export default async function ProductsPage(props: {
         />
       </TabsContent>
       <TabsContent value="sales">
-        {/* <ProductsTable
-          products={products}
+        <SalesTable
+          sales={sales}
           offset={newOffset ?? 0}
           totalProducts={totalProducts}
-        /> */}
+        />
       </TabsContent>
     </Tabs>
   );

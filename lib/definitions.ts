@@ -39,6 +39,15 @@ export type ProductForm = {
   status: 'active' | 'inactive';
 };
 
+export type SaleForm = {
+  id: string;
+  user_name: string;
+  product_name: string;
+  amount: string;
+  total_price: string;
+  created_at: string;
+};
+
 export type ProductRaw = Omit<
   Product,
   'price' | 'original_price' | 'amount_in_stock'
@@ -84,6 +93,22 @@ export type Customer = {
 export type CategoryField = {
   id: string;
   name: string;
+};
+
+export type UserField = {
+  id: string;
+  name: string;
+};
+
+export type ProductField = {
+  id: string;
+  name: string;
+};
+
+export type ProductQuery = {
+  id: string;
+  name: string;
+  price: string;
 };
 
 export type State = {
