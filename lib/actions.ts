@@ -131,17 +131,21 @@ export async function createSale(prevState: State, formData: FormData) {
         SELECT
         id,
         name,
-        price
+        price,
+        amount_in_stock
         FROM products
         where id = ${Number(product_id)}
     `;
 
   const product = data.rows[0];
   const total_price = Number(amount) * Number(product.price);
+  const newTotal = Number(product.amount_in_stock) - Number(amount);
 
   try {
     await sql`insert into sales (user_id, product_id, amount, total_price, created_at)
                 values(${Number(user_id)}, ${Number(product_id)}, ${Number(amount)}, ${total_price}, now())`;
+
+    await sql`update products set amount_in_stock = ${newTotal} where id = ${product.id}`;
   } catch (e) {
     return {
       message: 'Database Error: Failed to Create Invoice.'

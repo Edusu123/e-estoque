@@ -109,6 +109,7 @@ export type ProductQuery = {
   id: string;
   name: string;
   price: string;
+  amount_in_stock: string;
 };
 
 export type State = {
