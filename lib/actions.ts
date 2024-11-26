@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { deleteProductById } from './db';
 
 const ProductFormSchema = z.object({
   id: z.string(),
@@ -90,4 +91,13 @@ export async function createProduct(prevState: State, formData: FormData) {
 
   revalidatePath('/dashboard');
   redirect('/dashboard');
+}
+
+export async function deleteProduct(formData: FormData) {
+  console.log('test');
+  let id = Number(formData.get('id'));
+  console.log('id');
+  console.log(id);
+  await deleteProductById(id);
+  revalidatePath('/');
 }

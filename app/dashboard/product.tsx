@@ -11,7 +11,7 @@ import {
 import { Box, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SelectProduct } from '@/lib/db';
-// import { UploadButton, useUploadThing } from '@/components/ui/upload-thing';
+import { deleteProduct } from '@/lib/actions';
 
 export function Product({ product }: { product: SelectProduct }) {
   return (
@@ -52,24 +52,10 @@ export function Product({ product }: { product: SelectProduct }) {
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>
-              <form action={() => {}}>
+              <form action={deleteProduct}>
+                <input type="hidden" id="id" name="id" value={product.id} />
                 <button type="submit">Delete</button>
               </form>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              {/* <UploadButton
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  alert('Upload Completed');
-                }}
-                onUploadError={(res) => {
-                  alert('error');
-                }}
-              ></UploadButton> */}
-              {/* <UploadButton  > teste </UploadButton> */}
-              {/* <form action={() => {}}>
-                <button type="submit">Incluir imagem</button>
-              </form> */}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
