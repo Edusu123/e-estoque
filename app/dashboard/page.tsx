@@ -21,12 +21,12 @@ export default async function ProductsPage(props: {
     <Tabs defaultValue="all">
       <div className="flex items-center">
         <TabsList>
-          <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="active">Active</TabsTrigger>
-          <TabsTrigger value="draft">Draft</TabsTrigger>
+          <TabsTrigger value="all">Produtos</TabsTrigger>
+          <TabsTrigger value="sales">Vendas</TabsTrigger>
+          {/* <TabsTrigger value="draft">Draft</TabsTrigger>
           <TabsTrigger value="archived" className="hidden sm:flex">
             Archived
-          </TabsTrigger>
+          </TabsTrigger> */}
         </TabsList>
         <div className="ml-auto flex items-center gap-2">
           <Button size="sm" variant="outline" className="h-8 gap-1">
@@ -51,6 +51,13 @@ export default async function ProductsPage(props: {
           offset={newOffset ?? 0}
           totalProducts={totalProducts}
         />
+      </TabsContent>
+      <TabsContent value="sales">
+        {/* <ProductsTable
+          products={products}
+          offset={newOffset ?? 0}
+          totalProducts={totalProducts}
+        /> */}
       </TabsContent>
     </Tabs>
   );

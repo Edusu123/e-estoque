@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 import { auth, signOut } from 'auth';
+import a from 'public/placeholder-user.jpg';
 
 export async function User() {
   let session = await auth();
@@ -25,9 +26,9 @@ export async function User() {
           className="overflow-hidden rounded-full"
         >
           <Image
-            src={user?.image ?? '/placeholder-user.jpg'}
-            width={36}
-            height={36}
+            src={a}
+            width={32}
+            height={32}
             alt="Avatar"
             className="overflow-hidden rounded-full"
           />

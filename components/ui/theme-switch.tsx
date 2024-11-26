@@ -22,6 +22,7 @@ export default function ThemeSwitch() {
         title="Loading Light/Dark Toggle"
       />
     );
+
   if (resolvedTheme === 'dark') {
     return (
       <Button
@@ -33,6 +34,7 @@ export default function ThemeSwitch() {
       </Button>
     );
   }
+
   if (resolvedTheme === 'light') {
     return (
       <Button
