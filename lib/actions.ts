@@ -165,6 +165,15 @@ export async function deleteProduct(formData: FormData) {
   revalidatePath('/');
 }
 
+export async function deleteSale(formData: FormData) {
+  console.log('test');
+  let id = Number(formData.get('id'));
+  console.log('id');
+  console.log(id);
+  await sql`delete from sales where id = ${id}`;
+  revalidatePath('/');
+}
+
 export async function updateProduct(
   id: string,
   prevState: State,
