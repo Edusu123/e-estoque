@@ -39,6 +39,9 @@ export function Product({ product }: { product: SelectProduct }) {
       <TableCell className="hidden md:table-cell">{`R$${product.price}`}</TableCell>
       <TableCell className="hidden md:table-cell">{`R$${product.original_price}`}</TableCell>
       <TableCell className="hidden md:table-cell">{`R$${((Number(product.price) - Number(product.original_price)) * 100) / 100}`}</TableCell>
+      <TableCell className="hidden md:table-cell">
+        <Badge variant="secondary">{product.amount_in_stock}</Badge>
+      </TableCell>
       {/* <TableCell className="hidden md:table-cell">{product.stock}</TableCell> */}
       <TableCell className="hidden md:table-cell">
         {/* {product..toLocaleDateString("en-US")} */}

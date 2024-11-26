@@ -65,6 +65,9 @@ export function ProductsTable({
               <TableHead className="hidden md:table-cell">
                 Lucro sobre item
               </TableHead>
+              <TableHead className="hidden md:table-cell">
+                Quantidade em estoque
+              </TableHead>
               {/* <TableHead className="hidden md:table-cell">
                 Total Sales
               </TableHead> */}

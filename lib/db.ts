@@ -26,6 +26,7 @@ export const products = pgTable('products', {
   name: text('name').notNull(),
   status: statusEnum('status').notNull(),
   price: numeric('price', { precision: 10, scale: 2 }).notNull(),
+  amount_in_stock: numeric('amount_in_stock').notNull(),
   original_price: numeric('original_price', {
     precision: 10,
     scale: 2
