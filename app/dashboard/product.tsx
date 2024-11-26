@@ -12,6 +12,7 @@ import { Box, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SelectProduct } from '@/lib/db';
 import { deleteProduct } from '@/lib/actions';
+import Link from 'next/link';
 
 export function Product({ product }: { product: SelectProduct }) {
   return (
@@ -50,11 +51,15 @@ export function Product({ product }: { product: SelectProduct }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/dashboard/products/${product.id}/edit`}>
+                Editar
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
                 <input type="hidden" id="id" name="id" value={product.id} />
-                <button type="submit">Delete</button>
+                <button type="submit">Excluir</button>
               </form>
             </DropdownMenuItem>
           </DropdownMenuContent>

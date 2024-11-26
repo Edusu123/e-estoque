@@ -29,6 +29,16 @@ export type Product = {
   created_at: string;
 };
 
+export type ProductForm = {
+  id: string;
+  name: string;
+  category_id: string;
+  price: string;
+  original_price: string;
+  amount_in_stock: string;
+  status: 'active' | 'inactive';
+};
+
 export type ProductRaw = Omit<
   Product,
   'price' | 'original_price' | 'amount_in_stock'

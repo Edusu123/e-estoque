@@ -2,7 +2,7 @@
 
 import { signIn } from 'auth';
 import { AuthError } from 'next-auth';
-import { State } from './definitions';
+import { ProductForm, State } from './definitions';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
@@ -32,6 +32,11 @@ const ProductFormSchema = z.object({
 });
 
 const CreateProduct = ProductFormSchema.omit({
+  id: true,
+  created_at: true,
+  image_url: true
+});
+const UpdateProduct = ProductFormSchema.omit({
   id: true,
   created_at: true,
   image_url: true
@@ -82,8 +87,6 @@ export async function createProduct(prevState: State, formData: FormData) {
     await sql`insert into products (name, category_id, price, original_price, amount_in_stock, created_at, status)
               values(${name}, ${category_id}, ${price}, ${original_price}, ${amount_in_stock}, now(), 'active')`;
   } catch (e) {
-    console.log('e');
-    console.log(e);
     return {
       message: 'Database Error: Failed to Create Invoice.'
     };
@@ -100,4 +103,53 @@ export async function deleteProduct(formData: FormData) {
   console.log(id);
   await deleteProductById(id);
   revalidatePath('/');
+}
+
+export async function updateProduct(
+  id: string,
+  prevState: State,
+  formData: FormData
+) {
+  const validatedFields = CreateProduct.safeParse({
+    name: formData.get('name'),
+    category_id: formData.get('category_id'),
+    price: formData.get('price'),
+    original_price: formData.get('original_price'),
+    amount_in_stock: formData.get('amount_in_stock'),
+    status: formData.get('status')
+  });
+
+  console.log('validatedFields.data');
+  console.log(validatedFields.error);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Invoice.'
+    };
+  }
+
+  const { name, category_id, price, original_price, amount_in_stock, status } =
+    validatedFields.data;
+
+  var string = `update products set name = ${name}, category_id = ${category_id}, price = ${price}, original_price = ${original_price}, 
+                amount_in_stock = ${amount_in_stock}, status = ${status}
+              where id = ${id}`;
+
+  console.log('validatedFields');
+  console.log(validatedFields.data);
+
+  try {
+    await sql`update products set name = ${name}, category_id = ${category_id}, price = ${price}, original_price = ${original_price}, 
+                amount_in_stock = ${amount_in_stock}, status = ${status}
+              where id = ${id}`;
+  } catch (e) {
+    console.log(e);
+    return {
+      message: 'Database Error: Failed to Create Invoice.'
+    };
+  }
+
+  revalidatePath('/dashboard');
+  redirect('/dashboard');
 }

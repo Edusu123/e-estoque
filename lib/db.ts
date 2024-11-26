@@ -13,6 +13,8 @@ import {
 } from 'drizzle-orm/pg-core';
 import { count, eq, ilike } from 'drizzle-orm';
 import { createInsertSchema } from 'drizzle-zod';
+import { sql } from '@vercel/postgres';
+import { ProductForm } from './definitions';
 
 export const db = drizzle(neon(process.env.POSTGRES_URL!));
 
@@ -67,4 +69,25 @@ export async function getProducts(
 
 export async function deleteProductById(id: number) {
   await db.delete(products).where(eq(products.id, id));
+}
+
+export async function fetchProductById(id: string) {
+  const data = await sql<ProductForm>`
+      select 
+        products.id,
+        products.name,
+        products.category_id,
+        products.price,
+        products.original_price,
+        products.amount_in_stock,
+        products.status
+      from products
+      where products.id = ${id}
+    `;
+
+  const product = data.rows.map((product) => ({
+    ...product
+  }));
+
+  return product[0];
 }
