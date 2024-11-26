@@ -8,10 +8,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Box, MoreHorizontal } from 'lucide-react';
+import { Box, Hash, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SelectProduct } from '@/lib/db';
-import { deleteProduct } from '@/lib/actions';
+import { deleteProduct, deleteSale } from '@/lib/actions';
 import Link from 'next/link';
 import { SaleForm } from '@/lib/definitions';
 
@@ -19,7 +19,7 @@ export function Sale({ sale }: { sale: SaleForm }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
-        <Box></Box>
+        <Hash></Hash>
       </TableCell>
       <TableCell className="font-medium">{sale.user_name}</TableCell>
       <TableCell className="font-medium">{sale.product_name}</TableCell>
@@ -51,11 +51,11 @@ export function Sale({ sale }: { sale: SaleForm }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>
+            {/* <DropdownMenuItem>
               <Link href={`/dashboard/products/${sale.id}/edit`}>Editar</Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem>
-              <form action={deleteProduct}>
+              <form action={deleteSale}>
                 <input type="hidden" id="id" name="id" value={sale.id} />
                 <button type="submit">Excluir</button>
               </form>
