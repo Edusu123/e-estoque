@@ -31,8 +31,9 @@ import { User } from './user';
 import { VercelLogo } from '@/components/icons';
 import Providers from './providers';
 import { NavItem } from './nav-item';
-import { SearchInput } from './search';
+import logo from 'public/logo.webp';
 import ThemeSwitch from '@/components/ui/theme-switch';
+import Image from 'next/image';
 
 export default function DashboardLayout({
   children
@@ -71,7 +72,12 @@ function DesktopNav() {
           href="https://vercel.com/templates/next.js/admin-dashboard-tailwind-postgres-react-nextjs"
           className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
         >
-          <VercelLogo className="h-3 w-3 transition-all group-hover:scale-110" />
+          <Image
+            src={logo}
+            alt={'logo'}
+            className="h-3 w-3 transition-all group-hover:scale-110"
+          ></Image>
+          {/* <VercelLogo className="h-3 w-3 transition-all group-hover:scale-110" /> */}
           <span className="sr-only">Acme Inc</span>
         </Link>
 
