@@ -32,7 +32,9 @@ export function Sale({ sale }: { sale: SaleForm }) {
       <TableCell className="hidden md:table-cell">{`R$${sale.total_price}`}</TableCell>
       <TableCell className="hidden md:table-cell">
         <Badge variant="outline" className="capitalize">
-          {sale.created_at}
+          {new Date(sale.created_at).toLocaleDateString('pt-BR', {
+            timeZone: 'UTC'
+          })}
         </Badge>
       </TableCell>
       {/* <TableCell className="hidden md:table-cell">{product.stock}</TableCell> */}
