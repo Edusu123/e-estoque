@@ -54,12 +54,20 @@ export function ProductsTable({
               <TableHead className="hidden w-[100px] sm:table-cell">
                 <span className="sr-only">Image</span>
               </TableHead>
-              <TableHead>Name</TableHead>
+              <TableHead>Nome</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="hidden md:table-cell">Price</TableHead>
               <TableHead className="hidden md:table-cell">
-                Total Sales
+                Preço de venda
               </TableHead>
+              <TableHead className="hidden md:table-cell">
+                Preço de compra
+              </TableHead>
+              <TableHead className="hidden md:table-cell">
+                Lucro sobre item
+              </TableHead>
+              {/* <TableHead className="hidden md:table-cell">
+                Total Sales
+              </TableHead> */}
               {/* <TableHead className="hidden md:table-cell">Created at</TableHead> */}
               <TableHead>
                 <span className="sr-only">Actions</span>
