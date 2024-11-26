@@ -85,9 +85,9 @@ function DesktopNav() {
           <Package className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/dashboard/sales" label="Customers">
+        {/* <NavItem href="/dashboard/sales" label="Customers">
           <Hash className="h-5 w-5" />
-        </NavItem>
+        </NavItem> */}
 
         {/* 
         <NavItem href="#" label="Orders">
