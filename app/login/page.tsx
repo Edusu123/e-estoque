@@ -5,7 +5,16 @@ import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { authenticate } from 'app/lib/actions';
 // import { signIn } from '@/lib/auth';
-import { Eye, EyeOff, Lock, LogIn, Mail, User } from 'lucide-react';
+
+import {
+  Eye,
+  EyeOff,
+  Lock,
+  LogIn,
+  Mail,
+  MessageCircleWarning,
+  User
+} from 'lucide-react';
 import { useActionState, useState } from 'react';
 
 export default function LoginPage() {
@@ -34,6 +43,7 @@ export default function LoginPage() {
                 type="text"
                 placeholder="e-mail"
                 className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+                required
               />
             </div>
             <div className="mt-3 relative">
@@ -44,6 +54,7 @@ export default function LoginPage() {
                 type="password"
                 placeholder="senha"
                 className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+                required
               />
               {isPassVisible ? (
                 <EyeOff
@@ -58,12 +69,28 @@ export default function LoginPage() {
               )}
             </div>
             <div className="mt-3">
-              <Button size="sm" className="h-8 gap-1 right-2.5">
+              <Button
+                className="h-8 gap-1 right-2.5"
+                disabled={isPending}
+                size="sm"
+              >
                 <LogIn className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                   entrar
                 </span>
               </Button>
+            </div>
+            <div
+              className="flex h-8 items-end space-x-1"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {errorMessage && (
+                <>
+                  <MessageCircleWarning className="h-5 w-5 text-red-500" />
+                  <p className="text-sm text-red-500">{errorMessage}</p>
+                </>
+              )}
             </div>
           </form>
         </CardFooter>
