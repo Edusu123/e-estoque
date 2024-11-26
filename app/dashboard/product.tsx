@@ -8,22 +8,26 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { Box, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SelectProduct } from '@/lib/db';
-import { deleteProduct } from './actions';
+// import { UploadButton, useUploadThing } from '@/components/ui/upload-thing';
 
 export function Product({ product }: { product: SelectProduct }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
-        <Image
-          alt="Product image"
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={product.imageUrl}
-          width="64"
-        />
+        {product.imageUrl != null ? (
+          <Image
+            alt="Product image"
+            className="aspect-square rounded-md object-cover"
+            height="64"
+            src={product.imageUrl}
+            width="64"
+          />
+        ) : (
+          <Box></Box>
+        )}
       </TableCell>
       <TableCell className="font-medium">{product.name}</TableCell>
       <TableCell>
@@ -32,9 +36,9 @@ export function Product({ product }: { product: SelectProduct }) {
         </Badge>
       </TableCell>
       <TableCell className="hidden md:table-cell">{`$${product.price}`}</TableCell>
-      <TableCell className="hidden md:table-cell">{product.stock}</TableCell>
+      {/* <TableCell className="hidden md:table-cell">{product.stock}</TableCell> */}
       <TableCell className="hidden md:table-cell">
-        {product.availableAt.toLocaleDateString("en-US")}
+        {/* {product..toLocaleDateString("en-US")} */}
       </TableCell>
       <TableCell>
         <DropdownMenu>
@@ -48,9 +52,24 @@ export function Product({ product }: { product: SelectProduct }) {
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>
-              <form action={deleteProduct}>
+              <form action={() => {}}>
                 <button type="submit">Delete</button>
               </form>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              {/* <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  alert('Upload Completed');
+                }}
+                onUploadError={(res) => {
+                  alert('error');
+                }}
+              ></UploadButton> */}
+              {/* <UploadButton  > teste </UploadButton> */}
+              {/* <form action={() => {}}>
+                <button type="submit">Incluir imagem</button>
+              </form> */}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

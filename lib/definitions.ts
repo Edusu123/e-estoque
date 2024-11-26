@@ -25,6 +25,7 @@ export type Product = {
   original_price: string;
   amount_in_stock: string;
   image_url: string;
+  status: 'active' | 'inactive';
   created_at: string;
 };
 
@@ -68,4 +69,14 @@ export type Customer = {
   email: string;
   phone_number: string;
   created_at: string;
+};
+
+export type CategoryField = {
+  id: string;
+  name: string;
+};
+
+export type State = {
+  errors?: {};
+  message?: string | null;
 };
