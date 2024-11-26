@@ -23,7 +23,7 @@ export default async function ProductsPage(props: {
 
   return (
     <Tabs defaultValue="all">
-      <div className="flex items-center">
+      <div className="flex items-center mt-2">
         <TabsList>
           <TabsTrigger value="all">Produtos</TabsTrigger>
           <TabsTrigger value="sales">Vendas</TabsTrigger>
