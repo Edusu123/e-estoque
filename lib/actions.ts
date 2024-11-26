@@ -30,20 +30,6 @@ const ProductFormSchema = z.object({
   created_at: z.string()
 });
 
-const FileSchema = z.object({
-  name: z.string(),
-  type: z.string().startsWith('image/'),
-  size: z.number().max(5 * 1024 * 1024) // 5MB max size
-});
-
-const UploadSchema = z.object({
-  image: z
-    .instanceof(File)
-    .refine((file) => FileSchema.safeParse(file).success, {
-      message: 'Invalid file. Must be an image under 5MB.'
-    })
-});
-
 const CreateProduct = ProductFormSchema.omit({
   id: true,
   created_at: true,
